@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bootcamp-f18/php-palette-maker.git"
+    "url": "git+https://github.com/bmizepatterson/php-palette-maker.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bootcamp-f18/php-palette-maker/issues"
+    "url": "https://github.com/bmizepatterson/php-palette-maker/issues"
   },
-  "homepage": "https://github.com/bootcamp-f18/php-palette-maker#readme",
+  "homepage": "https://github.com/bmizepatterson/php-palette-maker#readme",
   "dependencies": {
     "bootstrap": "^4.1.3",
     "sass": "^1.14.3"

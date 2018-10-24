@@ -9,7 +9,7 @@
   </head>
   <body class="container mt-4">
 
-      <h1 class="text-center">PHP Palette Maker</h1>
+      <h1 class="text-center mb-5">PHP Palette Maker</h1>
 
 <?php
 
@@ -57,15 +57,15 @@
         <div class="col col-12 col-md-6">
             <h3 class="text-center">Colors</h3>
 
-            <form class="form-inline mt-4 mb-4" method="post" action="">
-                <input class="form-control mr-2" name="colorname" value="" placeholder="Color name...">
-                <div class="col input-group mr-2">
+            <form class="form-inline justify-content-around mt-4" method="post" action="">
+                <input class="form-control mr-2 mb-4" name="colorname" value="" placeholder="Color name...">
+                <div class="input-group mr-2 mb-4">
                     <div class="input-group-prepend">
                         <div class="input-group-text">#</div>
                     </div>
                     <input type="text" class="form-control" name="colorhex" placeholder="Hex value...">
                 </div>
-                <button type="submit" class="btn btn-success">Add</button>
+                <button type="submit" class="btn btn-success mb-4">Add</button>
                 <input type="hidden" name="action" value="addcolor">
             </form>
 
@@ -75,7 +75,7 @@
 ?>
                 <div class="row mb-4">
                     <div class="colorSwatch" style="background-color: #<?=$color["hex"]?>"></div>
-                    <div class="col my-auto"><?=$color["name"]?>, <code>#<?=$color["hex"]?></code></div>
+                    <div class="col my-auto"><?=$color["name"]?><br /><code>#<?=$color["hex"]?></code></div>
                     <div class="text-right my-auto">
                         <form method="post" action="">
                             <input type="hidden" name="colorid" value="<?=$color["id"]?>">
