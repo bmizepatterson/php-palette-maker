@@ -57,13 +57,17 @@
     foreach ($paletteList as $palette) {
 ?>
                 <div class="card mb-4">
-                    <h5 class="card-title ml-3 mt-4 mb-4"><?= $palette['palette_name'] ?></h5>
+                    <h5 class="card-title text-center ml-3 mt-4 mb-4"><?= $palette['palette_name'] ?></h5>
                     <ul class="list-group list-group-flush">
 <?php
         if ($palette['colors']) {
             foreach ($palette['colors'] as $color) {
 ?>
-                        <li class="list-group-item"><?= $color['color_name'] ?></li>
+                        <li class="list-group-item p-0">
+                            <div class="row no-gutters">
+                                <div class="col colorSwatch" style="background-color: #<?=$color["hex"]?>"></div>
+                                <div class="col pl-2 my-auto"><?=$color["color_name"]?><br /><code>#<?=$color["hex"]?></code></div>
+                        </li>
 <?php
             }
         }
@@ -97,9 +101,9 @@
     foreach ($colorList as $color) {
 ?>
                 <div class="row no-gutters mb-4">
-                    <div class="col colorSwatch" style="background-color: #<?=$color["hex"]?>"></div>
-                    <div class="col pl-2 my-auto"><?=$color["name"]?><br /><code>#<?=$color["hex"]?></code></div>
-                    <div class="col text-right my-auto">
+                    <div class="col-4 colorSwatch" style="background-color: #<?=$color["hex"]?>"></div>
+                    <div class="col-6 pl-2 my-auto"><?=$color["name"]?><br /><code>#<?=$color["hex"]?></code></div>
+                    <div class="col-2 text-right my-auto">
                         <form method="post" action="">
                             <input type="hidden" name="colorid" value="<?=$color["id"]?>">
                             <input type="hidden" name="action" value="deletecolor">
