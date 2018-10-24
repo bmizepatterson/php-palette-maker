@@ -16,9 +16,7 @@
     require_once("components/colors.php");
     require_once("components/palettes.php");
 
-    $action = '';
-    if (isset($_POST["action"])) { $action = $_POST["action"]; }
-
+    $action = isset($_POST["action"]) ? $_POST["action"] : '';
     $GLOBALS["statusMessage"] = '';
     $GLOBALS["statusMessageClass"] = 'alert-success';
 
@@ -45,19 +43,44 @@
     // Load data
     $colorList = getColorList();
     $paletteList = getPaletteList();
+    // echo '<pre>' . print_r($paletteList, true) . '</pre>';
 
 ?>
 
     <div class="row mt-4">
 
         <div class="col col-12 col-md-6">
-            <h3 class="text-center">Palettes</h3>
+            <h3 class="text-center mb-4">Palettes</h3>
+
+            <div>
+<?php
+    foreach ($paletteList as $palette) {
+?>
+                <div class="card mb-4">
+                    <h5 class="card-title ml-3 mt-4 mb-4"><?= $palette['palette_name'] ?></h5>
+                    <ul class="list-group list-group-flush">
+<?php
+        if ($palette['colors']) {
+            foreach ($palette['colors'] as $color) {
+?>
+                        <li class="list-group-item"><?= $color['color_name'] ?></li>
+<?php
+            }
+        }
+?>
+                    </ul>
+                </div>
+<?php
+    }
+?>
+            </div>
+
         </div>
 
         <div class="col col-12 col-md-6">
-            <h3 class="text-center">Colors</h3>
+            <h3 class="text-center mb-4">Colors</h3>
 
-            <form class="form-inline justify-content-around mt-4" method="post" action="">
+            <form class="form-inline justify-content-around" method="post" action="">
                 <input class="form-control mr-2 mb-4" name="colorname" value="" placeholder="Color name...">
                 <div class="input-group mr-2 mb-4">
                     <div class="input-group-prepend">
@@ -73,10 +96,10 @@
 <?php
     foreach ($colorList as $color) {
 ?>
-                <div class="row mb-4">
-                    <div class="colorSwatch" style="background-color: #<?=$color["hex"]?>"></div>
-                    <div class="col my-auto"><?=$color["name"]?><br /><code>#<?=$color["hex"]?></code></div>
-                    <div class="text-right my-auto">
+                <div class="row no-gutters mb-4">
+                    <div class="col colorSwatch" style="background-color: #<?=$color["hex"]?>"></div>
+                    <div class="col pl-2 my-auto"><?=$color["name"]?><br /><code>#<?=$color["hex"]?></code></div>
+                    <div class="col text-right my-auto">
                         <form method="post" action="">
                             <input type="hidden" name="colorid" value="<?=$color["id"]?>">
                             <input type="hidden" name="action" value="deletecolor">
