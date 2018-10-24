@@ -26,4 +26,25 @@ function getPaletteColors($id) {
     return pg_fetch_all($result);
 }
 
+function deletePalette($id) {
+    $db = getDb();
+    // Delete from palette table
+    $sql = "DELETE FROM palette WHERE id = " . $id;
+    $result = pg_query($db, $sql);
+
+    // Delete from color_palette table
+    $sql = "DELETE FROM color_palette WHERE palette_id = " . $id;
+    $result = $result && pg_query($db, $sql);
+
+    if ($result) {
+        $GLOBALS["statusMessage"] = "The palette was deleted.";
+        $GLOBALS["statusMessageClass"] = "alert-success";
+    }
+    else {
+        $GLOBALS["statusMessage"] = "The palette was not deleted.";
+        $GLOBALS["statusMessageClass"] = "alert-danger";
+    }
+
+}
+
 ?>
