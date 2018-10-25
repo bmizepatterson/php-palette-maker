@@ -61,7 +61,7 @@
     foreach ($paletteList as $palette) {
 ?>
                 <div class="card mb-4">
-                    <h5 class="card-title text-center ml-3 mt-4 mb-1"><?= $palette['palette_name'] ?></h5>
+                    <h5 class="card-title text-center ml-3 mr-3 mt-4 mb-1"><?= $palette['palette_name'] ?></h5>
                     <form method="post" action="" class="text-center">
                         <input type="hidden" name="action" value="deletepalette">
                         <input type="hidden" name="paletteid" value="<?=$palette["palette_id"]?>">
