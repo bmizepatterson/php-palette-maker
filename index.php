@@ -98,7 +98,7 @@
 <?php
     }
 ?>
-                <button type="submit" class="btn btn-success"><?php echo $editpalette ? 'Update' : 'Add'; ?></button>
+                <button type="submit" class="btn <?php echo $editpalette ? 'btn-primary' : 'btn-success'; ?>"><?php echo $editpalette ? 'Update' : 'Add'; ?></button>
                 <input type="hidden" name="action" value="<?php echo $editpalette ? 'updatepalette' : 'addpalette'; ?>">
             </form>
 
@@ -184,7 +184,7 @@
 <?php
     }
 ?>
-                <button type="submit" class="btn btn-success"><?php echo $editcolor ? 'Update' : 'Add'; ?></button>
+                <button type="submit" class="btn <?php echo $editcolor ? 'btn-primary' : 'btn-success'; ?>"><?php echo $editcolor ? 'Update' : 'Add'; ?></button>
                 <input type="hidden" name="action" value="<?php echo $editcolor ? 'updatecolor' : 'addcolor'; ?>">
             </form>
 
