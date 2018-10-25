@@ -13,8 +13,7 @@ function getPaletteColors($id) {
     $sql = "SELECT c.id AS color_id, c.name AS color_name, c.hex
             FROM color AS c
             JOIN color_palette AS cp ON cp.color_id = c.id
-            JOIN palette AS p ON p.id = cp.palette_id
-            WHERE p.id = $id
+            WHERE cp.palette_id = $id
             ORDER BY c.hex DESC";
     $result = pg_query(getDb(), $sql);
 
