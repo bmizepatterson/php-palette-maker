@@ -12,8 +12,8 @@ CREATE TABLE palette (
 );
 
 CREATE TABLE color_palette (
-    color_id INTEGER REFERENCES color(id),
-    palette_id INTEGER REFERENCES palette(id)
+    color_id INTEGER REFERENCES color(id) ON DELETE CASCADE,
+    palette_id INTEGER REFERENCES palette(id) ON DELETE CASCADE
 );
 
 CREATE UNIQUE INDEX color_palette_unique ON color_palette (color_id, palette_id);
