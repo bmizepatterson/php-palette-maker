@@ -152,20 +152,22 @@ $addableColors = getAddableColors($palette['palette_id']);
 if ($addableColors) {
 ?>
                                 <div class="col-8">
-                                    <form method="post" action="" class="form-inline float-right">
+                                    <form method="post" action="" class="form-inline">
                                         <input type="hidden" name="action" value="addpalettecolor">
                                         <input type="hidden" name="paletteid" value="<?= $palette['palette_id'] ?>">
-                                        <select name="colorid" class="form-control">
-                                            <option>Add a color</option>
+                                        <div class="row">
+                                                <select name="colorid" class="form-control col-10">
+                                                    <option>Add a color</option>
 <?php
     foreach ($addableColors as $color) {
 ?>
-                                            <option value="<?= $color['id'] ?>"><?= $color['name'] ?> (#<?= $color['hex'] ?>)</option>
+                                                    <option value="<?= $color['id'] ?>"><?= $color['name'] ?> (#<?= $color['hex'] ?>)</option>
 <?php
     }
 ?>
-                                        </select>
-                                        <button type="submit" class="btn"><i class="far fa-plus-square"></i></button>
+                                                </select>
+                                                <button type="submit" class="btn col-2"><i class="far fa-plus-square"></i></button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
