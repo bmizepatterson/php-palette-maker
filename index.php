@@ -54,6 +54,13 @@
             $safeColorId = htmlentities($_POST["colorid"]);
             $editcolor = getColor($safeColorId);
             break;
+        case "updatecolor":
+        // TODO
+            $safeColorId = htmlentities($_POST["colorid"]);
+            $safeColorName = htmlentities($_POST["colorname"]);
+            $safeColorHex = strtoupper(htmlentities($_POST["colorhex"]));
+            updateColor($safeColorId, $safeColorName, $safeColorHex);
+            break;
     }
 
 
@@ -65,7 +72,6 @@
     // Load data
     $colorList = getColorList();
     $paletteList = getPaletteList();
-    // echo '<pre>' . print_r($paletteList, true) . '</pre>';
 
 ?>
 
@@ -140,15 +146,22 @@
             <h3 class="text-center mb-4">Colors</h3>
 
             <form class="form-inline justify-content-center mb-5" method="post" action="">
-                <input class="form-control mr-2" name="colorname" value="" placeholder="Color name">
+                <input class="form-control mr-2" name="colorname" value="<?php echo $editcolor ? $editcolor['name'] : ''; ?>" placeholder="Color name">
                 <div class="input-group mr-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text">#</div>
                     </div>
-                    <input type="text" class="form-control" name="colorhex" placeholder="Hex value">
+                    <input type="text" class="form-control" name="colorhex" size="10" value="<?php echo $editcolor ? $editcolor['hex'] : ''; ?>" placeholder="Hex value">
                 </div>
-                <button type="submit" class="btn btn-success">Add</button>
-                <input type="hidden" name="action" value="addcolor">
+<?php
+    if ($editcolor) {
+?>
+                <input type="hidden" name="colorid" value="<?= $editcolor['id'] ?>">
+<?php
+    }
+?>
+                <button type="submit" class="btn btn-success"><?php echo $editcolor ? 'Update' : 'Add'; ?></button>
+                <input type="hidden" name="action" value="<?php echo $editcolor ? 'updatecolor' : 'addcolor'; ?>">
             </form>
 
             <div>
