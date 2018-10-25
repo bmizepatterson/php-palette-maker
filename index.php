@@ -129,6 +129,10 @@
                         </li>
 <?php
             }
+        } else {
+?>
+                        <li class="list-group-item"><span class="text-muted">Select a color below to add it to this palette.</span></li>
+<?php
         }
 ?>
                         <li class="list-group-item">

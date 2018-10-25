@@ -23,7 +23,7 @@ function getPaletteColors($id) {
 function getAddableColors($palette_id) {
     $sql = "SELECT id, name, hex FROM color
             WHERE color.id NOT IN (SELECT color_id FROM color_palette WHERE palette_id = $palette_id)
-            ORDER BY hex";
+            ORDER BY name";
     $result = pg_query(getDb(), $sql);
     return pg_fetch_all($result);
 }
