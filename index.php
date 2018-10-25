@@ -42,11 +42,10 @@
             $safePaletteName = htmlentities($_POST["palettename"]);
             addPalette($safePaletteName);
             break;
-        case "showaddpalettecolor":
-            // TODO
-            break;
         case "addpalettecolor":
-            // TODO
+            $safeColorId = htmlentities($_POST["colorid"]);
+            $safePaletteId = htmlentities($_POST["paletteid"]);
+            addColorToPalette($safePaletteId, $safeColorId);
             break;
         case "removepalettecolor":
             $safeColorId = htmlentities($_POST["colorid"]);
@@ -89,7 +88,7 @@
         <div class="col col-12 col-md-6">
             <h3 class="text-center mb-4">Palettes</h3>
 
-            <form class="form-inline justify-content-center mb-5" method="post" action="">
+            <form class="form-inline justify-content-center mb-5 p-2<?php echo $editpalette ? ' border border-primary' : ''; ?>" method="post" action="">
                 <input class="form-control mr-2" name="palettename" value="<?php echo $editpalette ? $editpalette['name'] : ''; ?>" placeholder="Palette name">
 <?php
     if ($editpalette) {
@@ -148,14 +147,31 @@
                                         <button class="btn" type="submit"><i class="far fa-edit"></i></button>
                                     </form>
                                 </div>
-                                <div class="col text-center">
-                                    <form>
-                                        <input type="hidden" name="action" value="showaddpalettecolor">
+<?php
+$addableColors = getAddableColors($palette['palette_id']);
+if ($addableColors) {
+?>
+                                <div class="col-8">
+                                    <form method="post" action="" class="form-inline float-right">
+                                        <input type="hidden" name="action" value="addpalettecolor">
                                         <input type="hidden" name="paletteid" value="<?= $palette['palette_id'] ?>">
+                                        <select name="colorid" class="form-control">
+                                            <option>Add a color</option>
+<?php
+    foreach ($addableColors as $color) {
+?>
+                                            <option value="<?= $color['id'] ?>"><?= $color['name'] ?> (#<?= $color['hex'] ?>)</option>
+<?php
+    }
+?>
+                                        </select>
                                         <button type="submit" class="btn"><i class="far fa-plus-square"></i></button>
                                     </form>
                                 </div>
                             </div>
+<?php
+}
+?>
                         </li>
                     </ul>
                 </div>
@@ -169,7 +185,7 @@
         <div class="col col-12 col-md-6">
             <h3 class="text-center mb-4">Colors</h3>
 
-            <form class="form-inline justify-content-center mb-5" method="post" action="">
+            <form class="form-inline justify-content-center mb-5 p-2<?php echo $editcolor ? ' border border-primary' : ''; ?>" method="post" action="">
                 <input class="form-control mr-2" name="colorname" value="<?php echo $editcolor ? $editcolor['name'] : ''; ?>" placeholder="Color name">
                 <div class="input-group mr-2">
                     <div class="input-group-prepend">
