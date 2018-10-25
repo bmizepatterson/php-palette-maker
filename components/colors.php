@@ -11,11 +11,11 @@ function addColor($name, $hex) {
     $sql = "INSERT INTO color (name, hex) VALUES ('$name', '$hex')";
     $result = pg_query(getDb(), $sql);
     if ($result) {
-        $GLOBALS["statusMessage"] = "Color <strong>$name</strong> ($hex) was added.";
+        $GLOBALS["statusMessage"] = "Color <strong>$name</strong> (<code>#$hex</code>) was added.";
         $GLOBALS["statusMessageClass"] = "alert-success";
     }
     else {
-        $GLOBALS["statusMessage"] = "Color <strong>$name</strong> ($hex) was not added.";
+        $GLOBALS["statusMessage"] = "Color <strong>$name</strong> (<code>#$hex</code>) was not added.";
         $GLOBALS["statusMessageClass"] = "alert-danger";
     }
 }
@@ -31,6 +31,10 @@ function deleteColor($id) {
         $GLOBALS["statusMessage"] = "The color was not deleted.";
         $GLOBALS["statusMessageClass"] = "alert-danger";
     }
+}
+
+function getColor($id) {
+
 }
 
 ?>

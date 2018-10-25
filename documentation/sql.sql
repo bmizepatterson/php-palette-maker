@@ -12,8 +12,8 @@ CREATE TABLE palette (
 );
 
 CREATE TABLE color_palette (
-    color_id INTEGER NOT NULL,
-    palette_id INTEGER NOT NULL
+    color_id INTEGER REFERENCES color(id) ON DELETE CASCADE,
+    palette_id INTEGER REFERENCES palette(id) ON DELETE CASCADE
 );
 
 

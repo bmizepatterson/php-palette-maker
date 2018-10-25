@@ -5,13 +5,7 @@ require_once("utility.php");
 function getPaletteList() {
     $sql = "SELECT id AS palette_id, name AS palette_name FROM palette";
     $query = pg_query(getDb(), $sql);
-    $palettes = pg_fetch_all($query);
-
-    foreach ($palettes as &$palette) {
-        $palette['colors'] = getPaletteColors($palette['palette_id']);
-    }
-
-    return $palettes;
+    return pg_fetch_all($query);
 }
 
 function getPaletteColors($id) {
@@ -20,7 +14,8 @@ function getPaletteColors($id) {
             FROM color AS c
             JOIN color_palette AS cp ON cp.color_id = c.id
             JOIN palette AS p ON p.id = cp.palette_id
-            WHERE p.id = $id";
+            WHERE p.id = $id
+            ORDER BY c.hex DESC";
     $result = pg_query(getDb(), $sql);
 
     return pg_fetch_all($result);
@@ -28,13 +23,8 @@ function getPaletteColors($id) {
 
 function deletePalette($id) {
     $db = getDb();
-    // Delete from palette table
     $sql = "DELETE FROM palette WHERE id = " . $id;
     $result = pg_query($db, $sql);
-
-    // Delete from color_palette table
-    $sql = "DELETE FROM color_palette WHERE palette_id = " . $id;
-    $result = $result && pg_query($db, $sql);
 
     if ($result) {
         $GLOBALS["statusMessage"] = "The palette was deleted.";
