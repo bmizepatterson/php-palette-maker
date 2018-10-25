@@ -21,11 +21,9 @@ function getPaletteColors($id) {
 }
 
 function getAddableColors($palette_id) {
-    $sql = "SELECT c.id, c.name, c.hex
-            FROM color AS c
-            JOIN color_palette AS cp ON cp.color_id = c.id
-            WHERE cp.palette_id != $palette_id
-            ORDER BY c.hex";
+    $sql = "SELECT id, name, hex FROM color
+            WHERE color.id NOT IN (SELECT color_id FROM color_palette WHERE palette_id = $palette_id)
+            ORDER BY hex";
     $result = pg_query(getDb(), $sql);
     return pg_fetch_all($result);
 }
