@@ -12,10 +12,11 @@ CREATE TABLE palette (
 );
 
 CREATE TABLE color_palette (
-    color_id INTEGER REFERENCES color(id) ON DELETE CASCADE,
-    palette_id INTEGER REFERENCES palette(id) ON DELETE CASCADE
+    color_id INTEGER REFERENCES color(id),
+    palette_id INTEGER REFERENCES palette(id)
 );
 
+CREATE UNIQUE INDEX color_palette_unique ON color_palette (color_id, palette_id);
 
 -- Seed the tables with some basic data
 
@@ -58,6 +59,7 @@ INSERT INTO palette (name) VALUES ('Bootstrap Default');
 INSERT INTO palette (name) VALUES ('Pumpkin Spice');
 INSERT INTO palette (name) VALUES ('Greyscale');
 INSERT INTO palette (name) VALUES ('Halloween');
+INSERT INTO palette (name) VALUES ('Empty');
 
 INSERT INTO color_palette (color_id, palette_id) VALUES (1,1);
 INSERT INTO color_palette (color_id, palette_id) VALUES (2,1);
@@ -79,3 +81,45 @@ INSERT INTO color_palette (color_id, palette_id) VALUES (14,3);
 INSERT INTO color_palette (color_id, palette_id) VALUES (15,3);
 INSERT INTO color_palette (color_id, palette_id) VALUES (16,3);
 INSERT INTO color_palette (color_id, palette_id) VALUES (12,3);
+
+INSERT INTO color_palette (color_id, palette_id) VALUES (6,4);
+INSERT INTO color_palette (color_id, palette_id) VALUES (12,4);
+
+
+-- Clean out tables so testing data can be refreshed
+DROP TABLE color_palette;
+DROP TABLE color;
+DROP TABLE palette;
+
+
+-- Testing queries that will be used later in our PHP code
+
+SELECT COUNT(*) FROM color;
+
+SELECT name, hex FROM color ORDER BY hex;
+
+
+-- Practicing for deletes
+INSERT INTO color (name, hex) VALUES ('Mush', 'cccccc');
+DELETE FROM color WHERE id = 35;
+
+
+-- Get colors that belong to a specific palette
+SELECT c.id, c.name, c.hex FROM color AS c
+JOIN color_palette AS cp ON cp.color_id = c.id
+WHERE cp.palette_id = 1
+ORDER BY c.name;
+
+
+-- Get the list of colors that does not belong to a specific palette
+SELECT id, name, hex FROM color
+WHERE color.id NOT IN (SELECT color_id FROM color_palette WHERE palette_id = 1)
+ORDER BY name;
+
+
+-- Gently used colors
+SELECT DISTINCT color_id FROM color_palette ORDER BY color_id;
+
+
+-- Well-stocked palettes
+SELECT DISTINCT palette_id FROM color_palette ORDER BY palette_id;
