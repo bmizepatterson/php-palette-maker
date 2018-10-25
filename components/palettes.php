@@ -3,7 +3,7 @@
 require_once("utility.php");
 
 function getPaletteList() {
-    $sql = "SELECT id AS palette_id, name AS palette_name FROM palette";
+    $sql = "SELECT id AS palette_id, name AS palette_name FROM palette ORDER BY palette_name";
     $query = pg_query(getDb(), $sql);
     return pg_fetch_all($query);
 }
@@ -62,6 +62,21 @@ function deleteColorFromPalette($palette_id, $color_id) {
     }
     else {
         $GLOBALS["statusMessage"] = "Could not remove the selected color from this palette.";
+        $GLOBALS["statusMessageClass"] = "alert-danger";
+    }
+}
+
+function updatePalette($id, $name) {
+    $sql = "UPDATE palette
+            SET name = '$name'
+            WHERE id = $id";
+    $result = pg_query(getDb(), $sql);
+    if ($result) {
+        $GLOBALS["statusMessage"] = "Palette <strong>$name</strong> has been updated.";
+        $GLOBALS["statusMessageClass"] = "alert-success";
+    }
+    else {
+        $GLOBALS["statusMessage"] = "Palette <strong>$name</strong> was not updated.";
         $GLOBALS["statusMessageClass"] = "alert-danger";
     }
 }

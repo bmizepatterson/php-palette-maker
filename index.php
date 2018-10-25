@@ -58,7 +58,9 @@
             $editpalette = getPalette($safePaletteId);
             break;
         case "updatepalette":
-            // TODO
+            $safePaletteId = htmlentities($_POST["paletteid"]);
+            $safePaletteName = htmlentities($_POST["palettename"]);
+            updatePalette($safePaletteId, $safePaletteName);
             break;
         case "editcolor":
             $safeColorId = htmlentities($_POST["colorid"]);
@@ -97,7 +99,7 @@
     }
 ?>
                 <button type="submit" class="btn btn-success"><?php echo $editpalette ? 'Update' : 'Add'; ?></button>
-                <input type="hidden" name="action" value="addpalette">
+                <input type="hidden" name="action" value="<?php echo $editpalette ? 'updatepalette' : 'addpalette'; ?>">
             </form>
 
             <div>
@@ -122,7 +124,7 @@
                                         <input type="hidden" name="colorid" value="<?=$color["color_id"]?>">
                                         <input type="hidden" name="paletteid" value="<?=$palette['palette_id']?>">
                                         <input type="hidden" name="action" value="removepalettecolor">
-                                        <button class="btn btn-sm p-1" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
+                                        <button class="btn btn-sm" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
                                     </form>
                                 </div>
                         </li>
