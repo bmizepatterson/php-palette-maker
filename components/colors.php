@@ -11,11 +11,11 @@ function addColor($name, $hex) {
     $sql = "INSERT INTO color (name, hex) VALUES ('$name', '$hex')";
     $result = pg_query(getDb(), $sql);
     if ($result) {
-        $GLOBALS["statusMessage"] = "<strong>$name</strong> was added.";
+        $GLOBALS["statusMessage"] = "Color <strong>$name</strong> ($hex) was added.";
         $GLOBALS["statusMessageClass"] = "alert-success";
     }
     else {
-        $GLOBALS["statusMessage"] = "<strong>$name</strong> was not added.";
+        $GLOBALS["statusMessage"] = "Color <strong>$name</strong> ($hex) was not added.";
         $GLOBALS["statusMessageClass"] = "alert-danger";
     }
 }

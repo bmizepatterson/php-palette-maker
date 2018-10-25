@@ -44,7 +44,19 @@ function deletePalette($id) {
         $GLOBALS["statusMessage"] = "The palette was not deleted.";
         $GLOBALS["statusMessageClass"] = "alert-danger";
     }
+}
 
+function addPalette($name) {
+    $sql = "INSERT INTO palette (name) VALUES ('$name')";
+    $result = pg_query(getDb(), $sql);
+    if ($result) {
+        $GLOBALS["statusMessage"] = "Palette <strong>$name</strong> was added.";
+        $GLOBALS["statusMessageClass"] = "alert-success";
+    }
+    else {
+        $GLOBALS["statusMessage"] = "Palette <strong>$name</strong> was not added.";
+        $GLOBALS["statusMessageClass"] = "alert-danger";
+    }
 }
 
 ?>

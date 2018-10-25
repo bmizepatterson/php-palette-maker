@@ -36,6 +36,10 @@
             $safePaletteId = htmlentities($_POST["paletteid"]);
             deletePalette($safePaletteId);
             break;
+        case "addpalette":
+            $safePaletteName = htmlentities($_POST["palettename"]);
+            addPalette($safePaletteName);
+            break;
     }
 
 
@@ -55,6 +59,12 @@
 
         <div class="col col-12 col-md-6">
             <h3 class="text-center mb-4">Palettes</h3>
+
+            <form class="form-inline justify-content-center mb-5" method="post" action="">
+                <input class="form-control mr-2" name="palettename" value="" placeholder="Palette name">
+                <button type="submit" class="btn btn-success">Add</button>
+                <input type="hidden" name="action" value="addpalette">
+            </form>
 
             <div>
 <?php
@@ -93,15 +103,15 @@
         <div class="col col-12 col-md-6">
             <h3 class="text-center mb-4">Colors</h3>
 
-            <form class="form-inline justify-content-around" method="post" action="">
-                <input class="form-control mr-2 mb-4" name="colorname" value="" placeholder="Color name...">
-                <div class="input-group mr-2 mb-4">
+            <form class="form-inline justify-content-center mb-5" method="post" action="">
+                <input class="form-control mr-2" name="colorname" value="" placeholder="Color name">
+                <div class="input-group mr-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text">#</div>
                     </div>
-                    <input type="text" class="form-control" name="colorhex" placeholder="Hex value...">
+                    <input type="text" class="form-control" name="colorhex" placeholder="Hex value">
                 </div>
-                <button type="submit" class="btn btn-success mb-4">Add</button>
+                <button type="submit" class="btn btn-success">Add</button>
                 <input type="hidden" name="action" value="addcolor">
             </form>
 
