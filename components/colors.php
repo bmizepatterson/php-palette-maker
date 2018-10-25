@@ -34,7 +34,7 @@ function deleteColor($id) {
 }
 
 function getColor($id) {
-    $result = pg_query(getDb(), "SELECT id, name, hex FROM color WHERE id = '$id' ORDER BY name");
+    $result = pg_query(getDb(), "SELECT id, name, hex FROM color WHERE id = $id");
     return pg_fetch_assoc($result);
 }
 

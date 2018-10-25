@@ -18,6 +18,7 @@
 
     $action = isset($_POST["action"]) ? $_POST["action"] : '';
     $editcolor = false;
+    $editpalette = false;
     $GLOBALS["statusMessage"] = '';
     $GLOBALS["statusMessageClass"] = 'alert-success';
 
@@ -47,7 +48,16 @@
         case "addpalettecolor":
             // TODO
             break;
+        case "removepalettecolor":
+            $safeColorId = htmlentities($_POST["colorid"]);
+            $safePaletteId = htmlentities($_POST["paletteid"]);
+            deleteColorFromPalette($safePaletteId, $safeColorId);
+            break;
         case "editpalette":
+            $safePaletteId = htmlentities($_POST["paletteid"]);
+            $editpalette = getPalette($safePaletteId);
+            break;
+        case "updatepalette":
             // TODO
             break;
         case "editcolor":
@@ -55,14 +65,12 @@
             $editcolor = getColor($safeColorId);
             break;
         case "updatecolor":
-        // TODO
             $safeColorId = htmlentities($_POST["colorid"]);
             $safeColorName = htmlentities($_POST["colorname"]);
             $safeColorHex = strtoupper(htmlentities($_POST["colorhex"]));
             updateColor($safeColorId, $safeColorName, $safeColorHex);
             break;
     }
-
 
     // Do we need to alert the user of anything?
     if ($GLOBALS["statusMessage"] != '') {
@@ -72,7 +80,6 @@
     // Load data
     $colorList = getColorList();
     $paletteList = getPaletteList();
-
 ?>
 
     <div class="row mt-4">
@@ -81,8 +88,15 @@
             <h3 class="text-center mb-4">Palettes</h3>
 
             <form class="form-inline justify-content-center mb-5" method="post" action="">
-                <input class="form-control mr-2" name="palettename" value="" placeholder="Palette name">
-                <button type="submit" class="btn btn-success">Add</button>
+                <input class="form-control mr-2" name="palettename" value="<?php echo $editpalette ? $editpalette['name'] : ''; ?>" placeholder="Palette name">
+<?php
+    if ($editpalette) {
+?>
+                <input type="hidden" name="paletteid" value="<?= $editpalette['id'] ?>">
+<?php
+    }
+?>
+                <button type="submit" class="btn btn-success"><?php echo $editpalette ? 'Update' : 'Add'; ?></button>
                 <input type="hidden" name="action" value="addpalette">
             </form>
 
@@ -103,6 +117,14 @@
                             <div class="row no-gutters">
                                 <div class="col colorSwatch" style="background-color: #<?=$color["hex"]?>"></div>
                                 <div class="col pl-2 my-auto"><?=$color["color_name"]?><br /><code>#<?=$color["hex"]?></code></div>
+                                <div class="col-2 my-auto">
+                                    <form method="post" action="" class="float-right">
+                                        <input type="hidden" name="colorid" value="<?=$color["color_id"]?>">
+                                        <input type="hidden" name="paletteid" value="<?=$palette['palette_id']?>">
+                                        <input type="hidden" name="action" value="removepalettecolor">
+                                        <button class="btn btn-sm p-1" type="submit"><i class="text-danger far fa-trash-alt"></i></button>
+                                    </form>
+                                </div>
                         </li>
 <?php
             }
@@ -121,7 +143,7 @@
                                     <form method="post" action="">
                                         <input type="hidden" name="action" value="editpalette">
                                         <input type="hidden" name="paletteid" value="<?=$palette["palette_id"]?>">
-                                        <button class="btn" type="submit" disabled><i class="far fa-edit"></i></button>
+                                        <button class="btn" type="submit"><i class="far fa-edit"></i></button>
                                     </form>
                                 </div>
                                 <div class="col text-center">

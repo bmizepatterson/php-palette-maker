@@ -48,4 +48,22 @@ function addPalette($name) {
     }
 }
 
+function getPalette($id) {
+    $result = pg_query(getDb(), "SELECT id, name FROM palette WHERE id = $id");
+    return pg_fetch_assoc($result);
+}
+
+function deleteColorFromPalette($palette_id, $color_id) {
+    $sql = "DELETE FROM color_palette WHERE color_id = $color_id AND palette_id = $palette_id";
+    $result = pg_query(getDb(), $sql);
+    if ($result) {
+        $GLOBALS["statusMessage"] = "The color has been removed from this palette.";
+        $GLOBALS["statusMessageClass"] = "alert-success";
+    }
+    else {
+        $GLOBALS["statusMessage"] = "Could not remove the selected color from this palette.";
+        $GLOBALS["statusMessageClass"] = "alert-danger";
+    }
+}
+
 ?>
